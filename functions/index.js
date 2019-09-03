@@ -38,10 +38,39 @@ app.get('/posts', (req, res) => {
 		});
 });
 
-app.post('/posts', (req, res) => {
+const FBAuth = (req, res, next) => {
+	let idToken;
+	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+		idToken = req.headers.authorization.split('Bearer ')[1];
+	} else {
+		console.error('No token found');
+		return res.status(403).json({ error: 'Unauthorized' });
+	}
+	admin
+		.auth()
+		.verifyIdToken(idToken)
+		.then((decodedToken) => {
+			req.user = decodedToken;
+			console.log(decodedToken);
+			return db.collection('users').where('userId', '==', req.user.uid).limit(1).get();
+		})
+		.then((data) => {
+			req.user.handle = data.docs[0].data().handle;
+			return next();
+		})
+		.catch((e) => {
+			console.error(e.code);
+			return res.status(403).json({ e });
+		});
+};
+
+app.post('/posts', FBAuth, (req, res) => {
+	if (isEmpty(req.body.body)) {
+		return res.status(400).json({ body: 'Must not be empty' });
+	}
 	const newPost = {
 		body: req.body.body,
-		userHandle: req.body.userHandle,
+		userHandle: req.user.handle,
 		createdAt: new Date().toISOString()
 	};
 	db
@@ -159,6 +188,8 @@ app.post('/login', (req, res) => {
 		.catch((e) => {
 			console.error(e.code);
 			if (e.code === 'auth/wrong-password') {
+				return res.status(403).json({ general: 'Wrong credentials, please try again' });
+			} else if (e.code === 'auth/user-not-found') {
 				return res.status(403).json({ general: 'Wrong credentials, please try again' });
 			} else {
 				return res.status(500).json({ error: e.code });
