@@ -53,7 +53,7 @@ exports.signUp = (req, res) => {
 			if (e.code === 'auth/email-already-in-use') {
 				return res.status(400).json({ email: 'Email already in use' });
 			} else {
-				return res.status(500).json({ error: e.code });
+				return res.status(500).json({ general: 'Something went wrong, please try again' });
 			}
 		});
 };
@@ -80,13 +80,7 @@ exports.login = (req, res) => {
 		})
 		.catch((e) => {
 			console.error(e.code);
-			if (e.code === 'auth/wrong-password') {
-				return res.status(403).json({ general: 'Wrong credentials, please try again' });
-			} else if (e.code === 'auth/user-not-found') {
-				return res.status(403).json({ general: 'Wrong credentials, please try again' });
-			} else {
-				return res.status(500).json({ error: e.code });
-			}
+			return res.status(403).json({ general: 'Wrong credentials, please try again' });
 		});
 };
 
