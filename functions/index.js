@@ -10,7 +10,15 @@ const {
 	unlikePost,
 	deletePost
 } = require('./handlers/posts');
-const { signUp, login, uploadImage, addUserDetails, getAuthenticatedUser } = require('./handlers/users');
+const {
+	signUp,
+	login,
+	uploadImage,
+	addUserDetails,
+	getAuthenticatedUser,
+	getUserDetails,
+	markNotificationsAsRead
+} = require('./handlers/users');
 const FBAuth = require('./util/fbAuth');
 
 app.get('/posts', getAllPosts);
@@ -26,6 +34,8 @@ app.post('/login', login);
 app.post('/user/image', FBAuth, uploadImage);
 app.post('/user', FBAuth, addUserDetails);
 app.get('/user', FBAuth, getAuthenticatedUser);
+app.get('/user/:handle', getUserDetails);
+app.post('/notifications', FBAuth, markNotificationsAsRead);
 
 exports.api = functions.region('us-central1').https.onRequest(app);
 

@@ -104,6 +104,32 @@ exports.addUserDetails = (req, res) => {
 		});
 };
 
+exports.getUserDetails = (req, res) => {
+	let userData = {};
+	db
+		.doc(`/users/${req.params.handle}`)
+		.get()
+		.then((doc) => {
+			if (doc.exists) {
+				userData.user = doc.data();
+				return db.collection('posts').where('userHandle', '==', req.params.handle).orderBy('createdAt', 'desc').get();
+			} else {
+				return res.status(404).json({ error: 'User not found' });
+			}
+		})
+		.then((data) => {
+			userData.posts = [];
+			data.forEach((doc) => {
+				userData.posts.push({ ...doc.data(), postId: doc.id });
+			});
+			return res.json(userData);
+		})
+		.catch((e) => {
+			console.error(e);
+			return res.status(500).json({ e });
+		});
+};
+
 exports.getAuthenticatedUser = (req, res) => {
 	let userData = {};
 	db
@@ -187,4 +213,21 @@ exports.uploadImage = (req, res) => {
 			});
 	});
 	busboy.end(req.rawBody);
+};
+
+exports.markNotificationsAsRead = (req, res) => {
+	let batch = db.batch();
+	req.body.forEach((notificationId) => {
+		const notification = db.doc(`/notifications/${notificationId}`);
+		batch.update(notification, { read: true });
+	});
+	batch
+		.commit()
+		.then(() => {
+			return res.json({ message: 'Notifications marked as read' });
+		})
+		.catch((e) => {
+			console.error(e);
+			return res.status(500).json({ e });
+		});
 };
