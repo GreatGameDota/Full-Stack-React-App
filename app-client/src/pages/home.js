@@ -28,7 +28,7 @@ class home extends Component {
 		// const { posts, loading } = this.props.data;
 		const { posts } = this.state;
 		// let recentPostsMarkup = !loading
-		let recentPostsMarkup = posts ? posts.map((post) => <Post post={post} user={null} />) : <h1>Loading...</h1>;
+		let recentPostsMarkup = posts ? posts.map((post) => <Post key={post.postId} post={post} user={null} />) : <h1>Loading...</h1>;
 		//     ? (
 		// 	posts.map((scream) => {
 		// 		/*<Scream key={scream.screamId} scream={scream} />*/
