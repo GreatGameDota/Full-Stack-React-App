@@ -14,7 +14,7 @@ exports.signUp = (req, res) => {
 
 	const { errors, valid } = validateSignupData(newUser);
 	if (!valid) {
-		return res.status(400).json({ errors });
+		return res.status(400).json(errors);
 	}
 
 	const defaultImage = 'default-pp.png';
@@ -66,7 +66,7 @@ exports.login = (req, res) => {
 
 	const { errors, valid } = validateLoginData(user);
 	if (!valid) {
-		return res.status(400).json({ errors });
+		return res.status(400).json(errors);
 	}
 
 	firebase

@@ -34,15 +34,15 @@ class login extends Component {
 			email: this.state.email,
 			password: this.state.password
 		};
+		this.setState({ loading: true });
 		axios
 			.post('/login', userData)
 			.then((res) => {
-				console.log(res.data);
+				localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
 				this.props.history.push('/');
 			})
-      .catch((err) => {
-        console.log(err.response.data);
-				this.setState({ errors: err.response.data });
+			.catch((err) => {
+				this.setState({ errors: err.response.data, loading: false });
 			});
 		// this.props.loginUser(userData, this.props.history);
 	};
@@ -54,8 +54,7 @@ class login extends Component {
 	render () {
 		// const { classes, UI: { loading } } = this.props;
 		const { classes } = this.props;
-		const loading = false;
-		const { errors } = this.state;
+		const { errors, loading } = this.state;
 
 		return (
 			<Grid container className={classes.form}>
