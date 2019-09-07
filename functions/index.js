@@ -103,8 +103,8 @@ exports.onUserImageChange = functions.region('us-central1').firestore.document('
 			data.forEach((doc) => {
 				const post = db.doc(`/posts/${doc.id}`);
 				batch.update(post, { userImage: change.after.data().imageUrl });
-				return batch.commit();
 			});
+			return batch.commit();
 		});
 	}
 	return true;
