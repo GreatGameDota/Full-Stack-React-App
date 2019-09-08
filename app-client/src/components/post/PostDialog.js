@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../../util/MyButton';
 import LikeButton from './LikeButton';
-// import Comments from './Comments';
-// import CommentForm from './CommentForm';
+import Comments from './Comments';
+import CommentForm from './CommentForm';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 // MUI Stuff
@@ -111,8 +111,8 @@ class PostDialog extends Component {
 					<span>{commentCount} comments</span>
 				</Grid>
 				<hr className={classes.visibleSeparator} />
-				{/* <CommentForm postId={postId} />
-				<Comments comments={comments} /> */}
+				<CommentForm postId={postId} />
+				<Comments comments={comments} />
 			</Grid>
 		);
 		return (

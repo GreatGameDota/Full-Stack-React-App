@@ -16,6 +16,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
+	let index;
 	switch (action.type) {
 		case LOADING_DATA:
 			return {
@@ -35,7 +36,7 @@ export default function (state = initialState, action) {
 			};
 		case LIKE_POST:
 		case UNLIKE_POST:
-			let index = state.posts.findIndex((post) => post.postId === action.payload.postId);
+			index = state.posts.findIndex((post) => post.postId === action.payload.postId);
 			state.posts[index] = action.payload;
 			if (state.post.postId === action.payload.postId) {
 				state.post = action.payload;

@@ -1,14 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import MyButton from '../../util/MyButton';
-// import PostScream from '../scream/PostScream';
-// import Notifications from './Notifications';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import MyButton from '../../util/MyButton';
+import PostAPost from '../post/PostAPost';
+import Notifications from './Notifications';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-// import HomeIcon from '@material-ui/icons/Home';
+import HomeIcon from '@material-ui/icons/Home';
 
 class Navbar extends Component {
 	render () {
@@ -18,13 +18,13 @@ class Navbar extends Component {
 				<Toolbar className='nav-container'>
 					{authenticated ? (
 						<Fragment>
-							{/* <PostScream /> */}
+							<PostAPost />
 							<Link to='/'>
-								{/* <MyButton tip='Home'>
+								<MyButton tip='Home'>
 									<HomeIcon />
-								</MyButton> */}
+								</MyButton>
 							</Link>
-							{/* <Notifications /> */}
+							<Notifications />
 						</Fragment>
 					) : (
 						<Fragment>
@@ -45,13 +45,12 @@ class Navbar extends Component {
 	}
 }
 
-// Navbar.propTypes = {
-// 	authenticated: PropTypes.bool.isRequired
-// };
+Navbar.propTypes = {
+	authenticated: PropTypes.bool.isRequired
+};
 
-// const mapStateToProps = (state) => ({
-// 	authenticated: state.user.authenticated
-// });
+const mapStateToProps = (state) => ({
+	authenticated: state.user.authenticated
+});
 
-// export default connect(mapStateToProps)(Navbar);
-export default Navbar;
+export default connect(mapStateToProps)(Navbar);

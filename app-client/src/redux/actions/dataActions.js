@@ -46,7 +46,7 @@ export const getPost = (postId) => (dispatch) => {
 		.catch((err) => console.log(err));
 };
 // Post a post
-export const postPost = (newPost) => (dispatch) => {
+export const postAPost = (newPost) => (dispatch) => {
 	dispatch({ type: LOADING_UI });
 	axios
 		.post('/posts', newPost)
