@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/full-stack-react-app/static/css/main.c715a7f2.chunk.css",
+    "main.js": "/full-stack-react-app/static/js/main.36f00426.chunk.js",
+    "main.js.map": "/full-stack-react-app/static/js/main.36f00426.chunk.js.map",
+    "runtime~main.js": "/full-stack-react-app/static/js/runtime~main.e9feee3d.js",
+    "runtime~main.js.map": "/full-stack-react-app/static/js/runtime~main.e9feee3d.js.map",
+    "static/js/2.6757e0e0.chunk.js": "/full-stack-react-app/static/js/2.6757e0e0.chunk.js",
+    "static/js/2.6757e0e0.chunk.js.map": "/full-stack-react-app/static/js/2.6757e0e0.chunk.js.map",
+    "index.html": "/full-stack-react-app/index.html",
+    "precache-manifest.db9141fd6a1c7f90f8edbef5b0e07d4b.js": "/full-stack-react-app/precache-manifest.db9141fd6a1c7f90f8edbef5b0e07d4b.js",
+    "service-worker.js": "/full-stack-react-app/service-worker.js",
+    "static/css/main.c715a7f2.chunk.css.map": "/full-stack-react-app/static/css/main.c715a7f2.chunk.css.map",
+    "static/media/default-pp.png": "/full-stack-react-app/static/media/default-pp.f5ef4263.png",
+    "static/media/logo.svg": "/full-stack-react-app/static/media/logo.dd9994d1.svg"
+  }
+}
