@@ -35,7 +35,7 @@ export const getPosts = () => (dispatch) => {
 export const getPost = (postId) => (dispatch) => {
 	dispatch({ type: LOADING_UI });
 	axios
-		.get(`/post/${postId}`)
+		.get(`/posts/${postId}`)
 		.then((res) => {
 			dispatch({
 				type: SET_POST,
@@ -49,7 +49,7 @@ export const getPost = (postId) => (dispatch) => {
 export const postPost = (newPost) => (dispatch) => {
 	dispatch({ type: LOADING_UI });
 	axios
-		.post('/post', newPost)
+		.post('/posts', newPost)
 		.then((res) => {
 			dispatch({
 				type: POST_POST,
@@ -67,7 +67,7 @@ export const postPost = (newPost) => (dispatch) => {
 // Like a post
 export const likePost = (postId) => (dispatch) => {
 	axios
-		.get(`/post/${postId}/like`)
+		.get(`/posts/${postId}/like`)
 		.then((res) => {
 			dispatch({
 				type: LIKE_POST,
@@ -79,7 +79,7 @@ export const likePost = (postId) => (dispatch) => {
 // Unlike a post
 export const unlikePost = (postId) => (dispatch) => {
 	axios
-		.get(`/post/${postId}/unlike`)
+		.get(`/posts/${postId}/unlike`)
 		.then((res) => {
 			dispatch({
 				type: UNLIKE_POST,
@@ -91,7 +91,7 @@ export const unlikePost = (postId) => (dispatch) => {
 // Submit a comment
 export const submitComment = (postId, commentData) => (dispatch) => {
 	axios
-		.post(`/post/${postId}/comment`, commentData)
+		.post(`/posts/${postId}/comment`, commentData)
 		.then((res) => {
 			dispatch({
 				type: SUBMIT_COMMENT,
@@ -108,7 +108,7 @@ export const submitComment = (postId, commentData) => (dispatch) => {
 };
 export const deletePost = (postId) => (dispatch) => {
 	axios
-		.delete(`/post/${postId}`)
+		.delete(`/posts/${postId}`)
 		.then(() => {
 			dispatch({ type: DELETE_POST, payload: postId });
 		})

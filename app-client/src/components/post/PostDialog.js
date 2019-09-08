@@ -18,11 +18,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 // Redux stuff
-// import { connect } from 'react-redux';
-// import { getPost, clearErrors } from '../../redux/actions/dataActions';
+import { connect } from 'react-redux';
+import { getPost, clearErrors } from '../../redux/actions/dataActions';
 
 const styles = (theme) => ({
-	...theme,
+	...theme.spread,
 	profileImage: {
 		maxWidth: 200,
 		height: 200,
@@ -69,12 +69,12 @@ class PostDialog extends Component {
 		window.history.pushState(null, null, newPath);
 
 		this.setState({ open: true, oldPath, newPath });
-		// this.props.getPost(this.props.postId);
+		this.props.getPost(this.props.postId);
 	};
 	handleClose = () => {
 		window.history.pushState(null, null, this.state.oldPath);
 		this.setState({ open: false });
-		// this.props.clearErrors();
+		this.props.clearErrors();
 	};
 
 	render () {
@@ -89,7 +89,7 @@ class PostDialog extends Component {
 				<CircularProgress size={200} thickness={2} />
 			</div>
 		) : (
-			<Grid container spacing={16}>
+			<Grid container spacing={10}>
 				<Grid item sm={5}>
 					<img src={userImage} alt='Profile' className={classes.profileImage} />
 				</Grid>
@@ -105,7 +105,7 @@ class PostDialog extends Component {
 					<Typography variant='body1'>{body}</Typography>
 					<LikeButton postId={postId} />
 					<span>{likeCount} likes</span>
-					<MyButton tip='comments'>
+					<MyButton tip='Comments'>
 						<ChatIcon color='primary' />
 					</MyButton>
 					<span>{commentCount} comments</span>
@@ -131,24 +131,23 @@ class PostDialog extends Component {
 	}
 }
 
-// PostDialog.propTypes = {
-// 	clearErrors: PropTypes.func.isRequired,
-// 	getPost: PropTypes.func.isRequired,
-// 	postId: PropTypes.string.isRequired,
-// 	userHandle: PropTypes.string.isRequired,
-// 	post: PropTypes.object.isRequired,
-// 	UI: PropTypes.object.isRequired
-// };
+PostDialog.propTypes = {
+	clearErrors: PropTypes.func.isRequired,
+	getPost: PropTypes.func.isRequired,
+	postId: PropTypes.string.isRequired,
+	userHandle: PropTypes.string.isRequired,
+	post: PropTypes.object.isRequired,
+	UI: PropTypes.object.isRequired
+};
 
-// const mapStateToProps = (state) => ({
-// 	post: state.data.post,
-// 	UI: state.UI
-// });
+const mapStateToProps = (state) => ({
+	post: state.data.post,
+	UI: state.UI
+});
 
-// const mapActionsToProps = {
-// 	getPost,
-// 	clearErrors
-// };
+const mapActionsToProps = {
+	getPost,
+	clearErrors
+};
 
-// export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(PostDialog));
-export default withStyles(styles)(PostDialog);
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(PostDialog));

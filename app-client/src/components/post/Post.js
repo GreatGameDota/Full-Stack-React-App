@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 import MyButton from '../../util/MyButton';
-// import Deletepost from './Deletepost';
+import Deletepost from './Deletepost';
 import PostDialog from './PostDialog';
 import LikeButton from './LikeButton';
 // MUI Stuff
@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
 // Redux
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 const styles = {
 	card: {
@@ -38,11 +38,11 @@ class Post extends Component {
 		dayjs.extend(relativeTime);
 		const {
 			classes,
-			post: { body, createdAt, userImage, userHandle, postId, likeCount, commentCount }
-			// user: { authenticated, credentials: { handle } }
+			post: { body, createdAt, userImage, userHandle, postId, likeCount, commentCount },
+			user: { authenticated, credentials: { handle } }
 		} = this.props;
 
-		// const deleteButton = authenticated && userHandle === handle ? <Deletepost postId={postId} /> : null;
+		const deleteButton = authenticated && userHandle === handle ? <Deletepost postId={postId} /> : null;
 		return (
 			<Card className={classes.card}>
 				<CardMedia image={userImage} title='Profile image' className={classes.image} />
@@ -50,34 +50,33 @@ class Post extends Component {
 					<Typography variant='h5' component={Link} to={`/users/${userHandle}`} color='primary'>
 						{userHandle}
 					</Typography>
-					{/* {deleteButton} */}
+					{deleteButton}
 					<Typography variant='body2' color='textSecondary'>
 						{dayjs(createdAt).fromNow()}
 					</Typography>
 					<Typography variant='body1'>{body}</Typography>
-					<LikeButton postId={postId} user={{ authendticated: true }} />
+					<LikeButton postId={postId} />
 					<span>{likeCount} Likes</span>
 					<MyButton tip='Comments'>
 						<ChatIcon color='primary' />
 					</MyButton>
 					<span>{commentCount} comments</span>
-					{/* <PostDialog postId={postId} userHandle={userHandle} openDialog={this.props.openDialog} /> */}
+					<PostDialog postId={postId} userHandle={userHandle} openDialog={this.props.openDialog} />
 				</CardContent>
 			</Card>
 		);
 	}
 }
 
-// post.propTypes = {
-// 	user: PropTypes.object.isRequired,
-// 	post: PropTypes.object.isRequired,
-// 	classes: PropTypes.object.isRequired,
-// 	openDialog: PropTypes.bool
-// };
+Post.propTypes = {
+	user: PropTypes.object.isRequired,
+	post: PropTypes.object.isRequired,
+	classes: PropTypes.object.isRequired,
+	openDialog: PropTypes.bool
+};
 
-// const mapStateToProps = (state) => ({
-// 	user: state.user
-// });
+const mapStateToProps = (state) => ({
+	user: state.user
+});
 
-// export default connect(mapStateToProps)(withStyles(styles)(post));
-export default withStyles(styles)(Post);
+export default connect(mapStateToProps)(withStyles(styles)(Post));

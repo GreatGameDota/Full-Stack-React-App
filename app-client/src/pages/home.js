@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
 import Post from '../components/post/Post';
-// import Profile from '../components/profile/Profile';
+import Profile from '../components/profile/Profile';
 import PostSkeleton from '../util/PostSkeleton';
 
 import { connect } from 'react-redux';
@@ -23,8 +23,7 @@ class home extends Component {
 					{recentPostsMarkup}
 				</Grid>
 				<Grid item sm={4} xs={12}>
-					{/* <Profile /> */}
-					Profile...
+					<Profile />
 				</Grid>
 			</Grid>
 		);
