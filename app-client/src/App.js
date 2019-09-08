@@ -21,7 +21,7 @@ import user from './pages/user';
 
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'https://us-central1-fullstackproject-c76f0.cloudfunctions.net/api';
+axios.defaults.baseURL = 'https://us-central1-fullstackproject-c76f0.cloudfunctions.net/api';
 
 const theme = createMuiTheme(themeObject);
 
