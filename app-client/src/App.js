@@ -26,7 +26,6 @@ import axios from 'axios';
 const theme = createMuiTheme(themeObject);
 
 const token = localStorage.FBIdToken;
-let authenticated = false;
 if (token) {
 	const decodedToken = jwtDecode(token);
 	if (decodedToken.exp * 1000 < Date.now()) {
@@ -35,7 +34,6 @@ if (token) {
 	} else {
 		store.dispatch({ type: SET_AUTHENTICATED });
 		axios.defaults.headers.common['Authorization'] = token;
-		authenticated = true;
 		store.dispatch(getUserData());
 	}
 }
@@ -50,8 +48,8 @@ class App extends Component {
 						<div className='container'>
 							<Switch>
 								<Route exact path='/' component={home} />
-								<AuthRoute exact path='/login' component={login} authenticated={authenticated} />
-								<AuthRoute exact path='/signup' component={signup} authenticated={authenticated} />
+								<AuthRoute exact path='/login' component={login} />
+								<AuthRoute exact path='/signup' component={signup} />
 								{/* <Route exact path='/users/:handle' component={user} /> */}
 								{/* <Route exact path='/users/:handle/post/:postId' component={user} /> */}
 							</Switch>
