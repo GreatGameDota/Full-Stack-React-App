@@ -53,6 +53,16 @@ const styles = (theme) => ({
 	}
 });
 
+function DialogLink (props) {
+	return (
+		<div>
+			<Link onClick={() => props.handleClose(props.to)} to={props.to} className={props.className}>
+				{props.children}
+			</Link>
+		</div>
+	);
+}
+
 class PostDialog extends Component {
 	state = {
 		open: false,
@@ -77,8 +87,13 @@ class PostDialog extends Component {
 		this.setState({ open: true, oldPath, newPath });
 		this.props.getPost(this.props.postId);
 	};
-	handleClose = () => {
-		window.history.pushState(null, null, this.state.oldPath);
+	handleClose = (path) => {
+		if (path == null) {
+			window.history.pushState(null, null, this.state.oldPath);
+		} else {
+			window.history.pushState(null, null, path);
+			window.history.go(0);
+		}
 		this.setState({ open: false });
 		this.props.clearErrors();
 	};
@@ -98,7 +113,13 @@ class PostDialog extends Component {
 			<div>
 				<img src={userImage} alt='Profile' className={classes.profileImage} />
 				<div className={classes.content}>
-					<Typography component={Link} color='primary' variant='h5' to={`/users/${userHandle}`}>
+					<Typography
+						component={DialogLink}
+						color='primary'
+						variant='h5'
+						to={`/users/${userHandle}`}
+						handleClose={this.handleClose}
+					>
 						@{userHandle}
 					</Typography>
 					<hr className={classes.invisibleSeparator} />
@@ -116,7 +137,7 @@ class PostDialog extends Component {
 				</div>
 				<hr className={classes.postHr} />
 				<CommentForm postId={postId} />
-				<Comments comments={comments} />
+				<Comments comments={comments} handleClose={this.handleClose} />
 			</div>
 		);
 		return (
@@ -124,8 +145,8 @@ class PostDialog extends Component {
 				<MyButton onClick={this.handleOpen} tip='Expand post' tipClassName={classes.expandButton}>
 					<UnfoldMore color='primary' />
 				</MyButton>
-				<Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth='sm'>
-					<MyButton tip='Close' onClick={this.handleClose} tipClassName={classes.closeButton}>
+				<Dialog open={this.state.open} onClose={() => this.handleClose(null)} fullWidth maxWidth='sm'>
+					<MyButton tip='Close' onClick={() => this.handleClose(null)} tipClassName={classes.closeButton}>
 						<CloseIcon />
 					</MyButton>
 					<DialogContent className={classes.dialogContent}>{dialogMarkup}</DialogContent>

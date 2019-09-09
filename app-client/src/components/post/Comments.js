@@ -21,6 +21,16 @@ const styles = (theme) => ({
 	}
 });
 
+function DialogLink (props) {
+	return (
+		<div>
+			<Link onClick={() => props.handleClose(props.to)} to={props.to} className={props.className}>
+				{props.children}
+			</Link>
+		</div>
+	);
+}
+
 class Comments extends Component {
 	render () {
 		const { comments, classes } = this.props;
@@ -37,7 +47,13 @@ class Comments extends Component {
 									</Grid>
 									<Grid item sm={9}>
 										<div className={classes.commentData}>
-											<Typography variant='h6' component={Link} to={`/users/${userHandle}`} color='primary'>
+											<Typography
+												variant='h6'
+												component={DialogLink}
+												to={`/users/${userHandle}`}
+												color='primary'
+												handleClose={this.props.handleClose}
+											>
 												{userHandle}
 											</Typography>
 											<br />
