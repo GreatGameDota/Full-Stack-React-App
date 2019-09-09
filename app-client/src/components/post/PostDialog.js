@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
@@ -24,8 +23,8 @@ import { getPost, clearErrors } from '../../redux/actions/dataActions';
 const styles = (theme) => ({
 	...theme.spread,
 	profileImage: {
-		maxWidth: 200,
-		height: 200,
+		width: '10rem',
+		height: '10rem',
 		borderRadius: '50%',
 		objectFit: 'cover'
 	},
@@ -44,6 +43,13 @@ const styles = (theme) => ({
 		textAlign: 'center',
 		marginTop: 50,
 		marginBottom: 50
+	},
+	postHr: {
+		width: '100%',
+		borderBottom: '1px solid rgba(0,0,0,0.1)'
+	},
+	content: {
+		float: 'right'
 	}
 });
 
@@ -89,11 +95,9 @@ class PostDialog extends Component {
 				<CircularProgress size={200} thickness={2} />
 			</div>
 		) : (
-			<Grid container spacing={10}>
-				<Grid item sm={5}>
-					<img src={userImage} alt='Profile' className={classes.profileImage} />
-				</Grid>
-				<Grid item sm={7}>
+			<div>
+				<img src={userImage} alt='Profile' className={classes.profileImage} />
+				<div className={classes.content}>
 					<Typography component={Link} color='primary' variant='h5' to={`/users/${userHandle}`}>
 						@{userHandle}
 					</Typography>
@@ -109,11 +113,11 @@ class PostDialog extends Component {
 						<ChatIcon color='primary' />
 					</MyButton>
 					<span>{commentCount} comments</span>
-				</Grid>
-				<hr className={classes.visibleSeparator} />
+				</div>
+				<hr className={classes.postHr} />
 				<CommentForm postId={postId} />
 				<Comments comments={comments} />
-			</Grid>
+			</div>
 		);
 		return (
 			<Fragment>

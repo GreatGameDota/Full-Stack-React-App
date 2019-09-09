@@ -10,13 +10,14 @@ import Typography from '@material-ui/core/Typography';
 const styles = (theme) => ({
 	...theme.spread,
 	commentImage: {
-		maxWidth: '100%',
-		height: 100,
+		width: '5rem',
+		height: '5rem',
 		objectFit: 'cover',
-		borderRadius: '50%'
+		borderRadius: '50%',
+		marginLeft: '32px'
 	},
 	commentData: {
-		marginLeft: 20
+		marginLeft: '48px'
 	}
 });
 
@@ -36,14 +37,15 @@ class Comments extends Component {
 									</Grid>
 									<Grid item sm={9}>
 										<div className={classes.commentData}>
-											<Typography variant='h5' component={Link} to={`/users/${userHandle}`} color='primary'>
+											<Typography variant='h6' component={Link} to={`/users/${userHandle}`} color='primary'>
 												{userHandle}
 											</Typography>
-											<Typography variant='body2' color='textSecondary'>
+											<br />
+											<Typography variant='caption' color='textSecondary'>
 												{dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
 											</Typography>
 											<hr className={classes.invisibleSeparator} />
-											<Typography variabnt='body1'>{body}</Typography>
+											<Typography variant='body2'>{body}</Typography>
 										</div>
 									</Grid>
 								</Grid>

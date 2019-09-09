@@ -96,7 +96,7 @@ class signup extends Component {
 							id='handle'
 							name='handle'
 							type='text'
-							label='Handle'
+							label='Username'
 							className={classes.textField}
 							helperText={errors.handle}
 							error={errors.handle ? true : false}

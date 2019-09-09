@@ -10,7 +10,10 @@ import { connect } from 'react-redux';
 import { submitComment } from '../../redux/actions/dataActions';
 
 const styles = (theme) => ({
-	...theme.spread
+	...theme.spread,
+	submitButton: {
+		margin: 0
+	}
 });
 
 class CommentForm extends Component {
@@ -54,7 +57,7 @@ class CommentForm extends Component {
 						fullWidth
 						className={classes.textField}
 					/>
-					<Button type='submit' variant='contained' color='primary' className={classes.button}>
+					<Button type='submit' variant='contained' color='primary' className={classes.submitButton}>
 						Submit
 					</Button>
 				</form>
