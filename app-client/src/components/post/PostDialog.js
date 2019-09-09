@@ -20,6 +20,8 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { connect } from 'react-redux';
 import { getPost, clearErrors } from '../../redux/actions/dataActions';
 
+import history from '../../history';
+
 const styles = (theme) => ({
 	...theme.spread,
 	profileImage: {
@@ -91,8 +93,7 @@ class PostDialog extends Component {
 		if (path == null) {
 			window.history.pushState(null, null, this.state.oldPath);
 		} else {
-			window.history.pushState(null, null, path);
-			window.history.go(0);
+			history.push({ pathname: path });
 		}
 		this.setState({ open: false });
 		this.props.clearErrors();

@@ -18,6 +18,7 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/user';
+import history from './history';
 
 import axios from 'axios';
 
@@ -43,7 +44,7 @@ class App extends Component {
 		return (
 			<MuiThemeProvider theme={theme}>
 				<Provider store={store}>
-					<Router>
+					<Router history={history}>
 						<Navbar />
 						<div className='container'>
 							<Switch>
