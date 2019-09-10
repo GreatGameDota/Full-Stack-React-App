@@ -125,7 +125,7 @@ class PostDialog extends Component {
 				<MyButton onClick={this.handleOpen} tip='Expand post' tipClassName={classes.expandButton}>
 					<UnfoldMore color='primary' />
 				</MyButton>
-				<Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth='sm'>
+				<Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth='sm' scroll='body'>
 					<MyButton tip='Close' onClick={this.handleClose} tipClassName={classes.closeButton}>
 						<CloseIcon />
 					</MyButton>
