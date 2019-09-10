@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
@@ -18,7 +18,6 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/user';
-import history from './history';
 
 import axios from 'axios';
 
@@ -44,7 +43,7 @@ class App extends Component {
 		return (
 			<MuiThemeProvider theme={theme}>
 				<Provider store={store}>
-					<Router history={history}>
+					<Router>
 						<Navbar />
 						<div className='container'>
 							<Switch>
@@ -53,7 +52,7 @@ class App extends Component {
 								<AuthRoute exact path='/signup' component={signup} />
 								<Route exact path='/users/:handle' component={user} />
 								<Route exact path='/users/:handle/post/:postId' component={user} />
-								<Route path='/' component={home} />
+								<Redirect to='/' />
 							</Switch>
 						</div>
 					</Router>

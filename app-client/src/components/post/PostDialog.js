@@ -20,8 +20,6 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { connect } from 'react-redux';
 import { getPost, clearErrors } from '../../redux/actions/dataActions';
 
-import history from '../../history';
-
 const styles = (theme) => ({
 	...theme.spread,
 	profileImage: {
@@ -46,24 +44,10 @@ const styles = (theme) => ({
 		marginTop: 50,
 		marginBottom: 50
 	},
-	postHr: {
-		width: '100%',
-		borderBottom: '1px solid rgba(0,0,0,0.1)'
-	},
 	content: {
 		float: 'right'
 	}
 });
-
-function DialogLink (props) {
-	return (
-		<div>
-			<Link onClick={() => props.handleClose(props.to)} to={props.to} className={props.className}>
-				{props.children}
-			</Link>
-		</div>
-	);
-}
 
 class PostDialog extends Component {
 	state = {
@@ -89,12 +73,8 @@ class PostDialog extends Component {
 		this.setState({ open: true, oldPath, newPath });
 		this.props.getPost(this.props.postId);
 	};
-	handleClose = (path) => {
-		if (path == null) {
-			window.history.pushState(null, null, this.state.oldPath);
-		} else {
-			history.push({ pathname: path });
-		}
+	handleClose = () => {
+		window.history.pushState(null, null, this.state.oldPath);
 		this.setState({ open: false });
 		this.props.clearErrors();
 	};
@@ -114,21 +94,20 @@ class PostDialog extends Component {
 			<div>
 				<img src={userImage} alt='Profile' className={classes.profileImage} />
 				<div className={classes.content}>
+					<Typography variant='h5'>{body}</Typography>
 					<Typography
-						component={DialogLink}
+						component={Link}
 						color='primary'
-						variant='h5'
-						to={`/users/${userHandle}`}
-						handleClose={this.handleClose}
+						variant='body1'
+						to={{ pathname: `/users/${userHandle}`, state: 'Refresh' }}
 					>
-						@{userHandle}
+						{userHandle}
 					</Typography>
 					<hr className={classes.invisibleSeparator} />
 					<Typography variant='body2' color='textSecondary'>
 						{dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
 					</Typography>
 					<hr className={classes.invisibleSeparator} />
-					<Typography variant='body1'>{body}</Typography>
 					<LikeButton postId={postId} />
 					<span>{likeCount} likes</span>
 					<MyButton tip='Comments'>
@@ -136,7 +115,7 @@ class PostDialog extends Component {
 					</MyButton>
 					<span>{commentCount} comments</span>
 				</div>
-				<hr className={classes.postHr} />
+				<hr className={classes.visibleSeparator} />
 				<CommentForm postId={postId} />
 				<Comments comments={comments} handleClose={this.handleClose} />
 			</div>
@@ -146,8 +125,8 @@ class PostDialog extends Component {
 				<MyButton onClick={this.handleOpen} tip='Expand post' tipClassName={classes.expandButton}>
 					<UnfoldMore color='primary' />
 				</MyButton>
-				<Dialog open={this.state.open} onClose={() => this.handleClose(null)} fullWidth maxWidth='sm'>
-					<MyButton tip='Close' onClick={() => this.handleClose(null)} tipClassName={classes.closeButton}>
+				<Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth='sm'>
+					<MyButton tip='Close' onClick={this.handleClose} tipClassName={classes.closeButton}>
 						<CloseIcon />
 					</MyButton>
 					<DialogContent className={classes.dialogContent}>{dialogMarkup}</DialogContent>

@@ -21,16 +21,6 @@ const styles = (theme) => ({
 	}
 });
 
-function DialogLink (props) {
-	return (
-		<div>
-			<Link onClick={() => props.handleClose(props.to)} to={props.to} className={props.className}>
-				{props.children}
-			</Link>
-		</div>
-	);
-}
-
 class Comments extends Component {
 	render () {
 		const { comments, classes } = this.props;
@@ -47,12 +37,12 @@ class Comments extends Component {
 									</Grid>
 									<Grid item sm={9}>
 										<div className={classes.commentData}>
+											<Typography variant='h6'>{body}</Typography>
 											<Typography
-												variant='h6'
-												component={DialogLink}
-												to={`/users/${userHandle}`}
+												variant='body2'
+												component={Link}
+												to={{ pathname: `/users/${userHandle}`, state: 'Refresh' }}
 												color='primary'
-												handleClose={this.props.handleClose}
 											>
 												{userHandle}
 											</Typography>
@@ -61,7 +51,6 @@ class Comments extends Component {
 												{dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
 											</Typography>
 											<hr className={classes.invisibleSeparator} />
-											<Typography variant='body2'>{body}</Typography>
 										</div>
 									</Grid>
 								</Grid>

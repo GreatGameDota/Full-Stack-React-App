@@ -16,17 +16,22 @@ class home extends Component {
 	}
 	render () {
 		const { posts, loading } = this.props.data;
-		let recentPostsMarkup = !loading ? posts.map((post) => <Post key={post.postId} post={post} />) : <PostSkeleton />;
-		return (
-			<Grid container spacing={10}>
-				<Grid item sm={8} xs={12}>
-					{recentPostsMarkup}
+		if (posts != null && (posts.length > 0 || loading)) {
+			let recentPostsMarkup = !loading ? posts.map((post) => <Post key={post.postId} post={post} />) : <PostSkeleton />;
+			return (
+				<Grid container spacing={1}>
+					<Grid item sm={8} xs={8}>
+						{recentPostsMarkup}
+					</Grid>
+					<Grid item sm={4} xs={4}>
+						<Profile />
+					</Grid>
 				</Grid>
-				<Grid item sm={4} xs={12}>
-					<Profile />
-				</Grid>
-			</Grid>
-		);
+			);
+		} else {
+			console.log('TOO MANY REQUESTS');
+			return <p>Something went wrong</p>;
+		}
 	}
 }
 

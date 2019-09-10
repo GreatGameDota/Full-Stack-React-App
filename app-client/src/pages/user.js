@@ -14,8 +14,27 @@ import { getUserData } from '../redux/actions/dataActions';
 class user extends Component {
 	state = {
 		profile: null,
-		postIdParam: null
+		postIdParam: null,
+		refresh: false
 	};
+	componentWillReceiveProps (props) {
+		if (props.location.state === 'Refresh') {
+			this.setState((oldState) => ({
+				refresh: !oldState.refresh
+			}));
+			const handle = props.match.params.handle;
+			this.props.getUserData(handle);
+			axios
+				.get(`/user/${handle}`)
+				.then((res) => {
+					this.setState({
+						profile: res.data.user
+					});
+				})
+				.catch((err) => console.log(err));
+			props.location.state = '';
+		}
+	}
 	componentDidMount () {
 		const handle = this.props.match.params.handle;
 		const postId = this.props.match.params.postId;
@@ -50,11 +69,11 @@ class user extends Component {
 		);
 
 		return (
-			<Grid container spacing={10}>
-				<Grid item sm={8} xs={12}>
+			<Grid container spacing={1} key={this.state.refresh}>
+				<Grid item sm={8} xs={6}>
 					{postsMarkup}
 				</Grid>
-				<Grid item sm={4} xs={12}>
+				<Grid item sm={4} xs={6}>
 					{this.state.profile === null ? <ProfileSkeleton /> : <StaticProfile profile={this.state.profile} />}
 				</Grid>
 			</Grid>
