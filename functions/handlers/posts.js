@@ -125,7 +125,7 @@ exports.likePost = (req, res) => {
 		})
 		.then((data) => {
 			if (data.empty) {
-				return db
+				db
 					.collection('likes')
 					.add({
 						postId: req.params.postId,
@@ -171,7 +171,7 @@ exports.unlikePost = (req, res) => {
 			if (data.empty) {
 				return res.status(400).json({ error: 'Post not liked' });
 			} else {
-				return db
+				db
 					.doc(`/likes/${data.docs[0].id}`)
 					.delete()
 					.then(() => {
@@ -179,7 +179,7 @@ exports.unlikePost = (req, res) => {
 						return postDocument.update({ likeCount: postData.likeCount });
 					})
 					.then(() => {
-						res.json(postData);
+						return res.json(postData);
 					});
 			}
 		})
@@ -204,7 +204,7 @@ exports.deletePost = (req, res) => {
 			}
 		})
 		.then(() => {
-			res.json({ message: 'Post deleted successfully' });
+			return res.json({ message: 'Post deleted successfully' });
 		})
 		.catch((e) => {
 			console.error(e);
