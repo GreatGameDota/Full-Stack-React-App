@@ -118,10 +118,17 @@ exports.likePost = (req, res) => {
 			if (doc.exists) {
 				postData = doc.data();
 				postData.postId = doc.id;
-				return likeDocument.get();
+				return db.collection('comments').where('postId', '==', req.params.postId).get();
 			} else {
 				return res.status(404).json({ error: 'Post not found' });
 			}
+		})
+		.then((data) => {
+			postData.comments = [];
+			data.forEach((doc) => {
+				postData.comments.push(doc.data());
+			});
+			return likeDocument.get();
 		})
 		.then((data) => {
 			if (data.empty) {
@@ -162,10 +169,17 @@ exports.unlikePost = (req, res) => {
 			if (doc.exists) {
 				postData = doc.data();
 				postData.postId = doc.id;
-				return likeDocument.get();
+				return db.collection('comments').where('postId', '==', req.params.postId).get();
 			} else {
 				return res.status(404).json({ error: 'Post not found' });
 			}
+		})
+		.then((data) => {
+			postData.comments = [];
+			data.forEach((doc) => {
+				postData.comments.push(doc.data());
+			});
+			return likeDocument.get();
 		})
 		.then((data) => {
 			if (data.empty) {
